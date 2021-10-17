@@ -1,0 +1,57 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Update User Info</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+	<div class="row">
+		<div class="col-md-12 bg-light text-right">
+		<button type="button" class="btn"><a href="../user-management"> Home </a></button>
+		<button type="button" class="btn"><a href="../login"> Sign Out </a></button>
+		</div>
+	</div>
+
+	<div class="container-fluid h-100">
+		<div class="row justify-content-center align-items-center h-100">
+			<div class="col col-sm-6 col-md-6 col-lg-4 col-xl-3">
+				
+				<div>
+					<h3 style="text-align: center">Update User</h3>
+				</div>
+				<form th:action="@{../update}" method="post">
+					<input type="hidden" name="userid" th:value="${user.userid}" />
+					<div class="form-group">
+						<input type="text" class="form-control form-control-lg" id="uname" name="uname"
+							placeholder="Enter Name" th:value="${user.uname}">
+
+					</div>
+					
+						<div class="form-group">
+						<input type="password" class="form-control form-control-lg" id="password" name="password"
+							placeholder="Enter Password" th:value="${user.password}">
+					</div>
+					<div class="form-group">
+						<select class="custom-select" name="roleType" id="roleType">					    
+					    <option value="ADMIN">ADMIN</option>
+					    <option selected value="USER">USER</option>
+					  </select>
+				  </div>
+					<div class="form-group">
+						<button class="btn btn-info btn-lg btn-block">Update</button>
+					</div>
+					
+					
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

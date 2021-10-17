@@ -1,0 +1,192 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Create Order</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+	
+function showCategory(){
+		$('#category_name').empty();
+
+		$.ajax({
+		"url": "http://localhost:8080/showcategory",
+		"method": "GET",
+		"timeout": 0,
+		"headers": {
+		"Content-Type": "application/x-www-form-urlencoded"
+		},
+		success: function (data) {
+		console.log(data);
+		var new_data=JSON.parse(data);
+		var before_item='<option value="">Select Category</option>';
+		$('#category_name').append(before_item);
+		for(k in new_data){
+		var itemList = '<option  value='+new_data[k].category_name+'>'+new_data[k].category_name+'</option>';
+		$('#category_name').append(itemList);   
+		}
+		},error: function(jqXHR, textStatus, errorThrown) {
+			console.log("Show All Lead API Response Failed"); 
+			console.log('error: ' + textStatus + ': ' + errorThrown); 
+			var data_items="No Item";
+			$('#category_name').append(data_items);    
+			}
+		});
+	}
+	
+	
+function findItem(category_name){
+	console.log(category_name)
+	$('#item_name').empty();
+	var before_item='<option value="">Select Item</option>';
+	$('#item_name').append(before_item);
+
+	$.ajax({
+	"url": "http://localhost:8080/showitem/"+category_name+"",
+	"method": "GET",
+	"timeout": 0,
+	"headers": {
+	"Content-Type": "application/x-www-form-urlencoded"
+	},
+	success: function (data) {
+	console.log(data);
+	var new_data=JSON.parse(data);	
+	for(k in new_data){
+		if(new_data[k].qty==0){
+			
+			}  else {		
+				var itemList = '<option  value='+new_data[k].item_name+'>'+new_data[k].item_name+'</option>';
+				$('#item_name').append(itemList);   
+	}
+	}
+	},error: function(jqXHR, textStatus, errorThrown) {
+		console.log("Show All Lead API Response Failed"); 
+		console.log('error: ' + textStatus + ': ' + errorThrown); 
+		var data_items="No Item";
+		$('#item_name').append(data_items);    
+		}
+	});
+}
+	
+	
+	
+function findPrice(itemid){
+	console.log(itemid)
+	$('#qty').val(1);
+	$('#price').val(0);
+	$('#demoprice').val(0);
+	
+	
+
+	$.ajax({
+	"url": "http://localhost:8080/itemprice/"+itemid+"",
+	"method": "GET",
+	"timeout": 0,
+	"headers": {
+	"Content-Type": "application/x-www-form-urlencoded"
+	},
+	success: function (data) {
+	console.log(data);
+	var new_data=JSON.parse(data);	
+	$('#price').val(new_data.price);
+	$('#demoprice').val(new_data.price);
+	
+	},error: function(jqXHR, textStatus, errorThrown) {
+		console.log("Show  API Response Failed"); 
+		console.log('error: ' + textStatus + ': ' + errorThrown); 
+		$('#price').val(0); 
+		$('#demoprice').val(0);
+		}
+	});
+}
+
+function changePrice(qty){	
+	$('#price').val('');
+	var price=$('#demoprice').val();
+	console.log(price);	
+	var new_price=qty*price;
+	$('#price').val(new_price);	
+}
+	
+	
+	</script>
+		
+</head>
+
+<body onload="showCategory();">
+
+	<div class="row">
+		<div class="col-md-12 bg-light text-right">
+			<button type="button" class="btn"><a href="./unauth_user"> Home </a></button>
+			<button type="button" class="btn"><a href="./login"> Sign Out </a></button>
+		</div>
+	</div>
+
+	<div class="container-fluid h-100">
+		<div class="row justify-content-center align-items-center h-100">
+			<div class="col col-sm-6 col-md-6 col-lg-4 col-xl-3">
+				<div class="alert alert-danger" th:if="${error}" role="alert">
+					<span th:text="${error}"></span>
+				</div>
+				<div>
+					<h3 style="text-align: center">Create Order</h3>
+				</div>
+				<form th:action="@{../user/place-order}" method="post">
+					
+					<div class="form-group">
+						<input type="text" class="form-control form-control-lg" id="cust_name" name="cust_name"
+							placeholder="Enter  Customer Name" >
+
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control form-control-lg" id="cust_mob" name="cust_mob"
+							placeholder="Enter Customer Mobile">
+					</div>
+					
+					<div class="form-group">
+						<input type="text" class="form-control form-control-lg" id="cust_email" name="cust_email"
+							placeholder="Enter Customer email">
+					</div>
+					
+					
+					<div class="form-group">
+						<select class="custom-select" name="category_name" id="category_name" onchange="findItem(this.value)">					    
+					   
+					  </select>
+				  </div>
+				  
+				  <div class="form-group">
+						<select class="custom-select" name="item_name" id="item_name"  onchange="findPrice(this.value)" >					    
+					   <option value="-1">Select Item</option>
+					  </select>
+				  </div>
+				  
+				  	<div class="form-group">
+						<input type="text" class="form-control form-control-lg" id="qty" name="qty"
+							placeholder="Enter Product Quantity" onchange="changePrice(this.value)" value="1">
+					</div>
+					
+					
+						<div class="form-group">
+						<input type="hidden" class="form-control form-control-lg" id="demoprice" name="demoprice"
+							placeholder="Price" readonly="readonly">
+						<input type="text" class="form-control form-control-lg" id="price" name="price"
+							placeholder="Price" readonly="readonly">
+					</div>
+					
+				  
+					<div class="form-group">
+						<button class="btn btn-info btn-lg btn-block">Place Order</button>
+					</div>
+					
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

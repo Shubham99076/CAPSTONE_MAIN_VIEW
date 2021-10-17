@@ -1,0 +1,74 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Show Invoice</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+</head>
+
+<body>
+	<div class="row">
+		<div class="col-md-12 bg-light text-right">
+			<button type="button" class="btn"><a href="./user-management"> Home </a></button>	
+			<button type="button" class="btn"><a href="./login"> Sign Out </a></button>				
+		</div>
+	</div>
+
+	<div class="container-fluid h-100">
+		<div class="row justify-content-center">
+		<div>
+					<h3 style="text-align: center">Show Invoice</h3>
+				</div>
+			<div class="col col-sm-6 col-md-6 col-lg-9 col-xl-10">
+				<table class="table table-striped">
+					<thead>
+						<td>Invoice Id</td>
+						<td>PO Id</td>		
+						<td>Order Id</td>					
+						<td>Quantity</td>
+						<td>Total Amount</td>
+						<td>Paid Amount</td>
+						<td>Remaining Amount</td>	
+						<td>Payment Status</td>						
+						<td>PO Status</td>		
+						<td>Item  name</td>
+						<td>Category</td>	
+						<td>Customer Name</td>	
+						<td>Customer Email</td>	
+						<td>Customer Mobile</td>									
+						<td>Created Date</td>
+						<td>Modified Date</td>
+					</thead>
+					<tbody>
+						<tr th:each="user: ${cust_invoice}">
+							<td th:text="${user.invoiceid}"></td>
+							<td th:text="${user.poid}"></td>
+							<td th:text="${user.orderid}"></td>
+							<td th:text="${user.quantity}"></td>
+							<td th:text="${user.amount}"></td>
+							<td th:text="${user.paid_amount}"></td>
+							<td th:text="${user.remaing_amount}"></td>
+							<td th:text="${user.payment_status}"></td>
+							<td th:text="${user.po_status}"></td>
+							<td th:text="${user.item_name}"></td>
+							<td th:text="${user.category_name}"></td>							
+							<td th:text="${user.cust_name}"></td>
+							<td th:text="${user.cust_email}"></td>
+							<td th:text="${user.cust_mob}"></td>
+							<td th:text="${user.created_at}"></td>
+							<td th:text="${user.updated_at}"></td>
+							
+													
+											
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

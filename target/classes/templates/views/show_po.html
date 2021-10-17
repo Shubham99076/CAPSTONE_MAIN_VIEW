@@ -1,0 +1,49 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Show  PO Orders</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+</head>
+
+<body>
+	<div class="row">
+		<div class="col-md-12 bg-light text-right">
+			<button type="button" class="btn"><a href="./user-management"> Home </a></button>	
+			<button type="button" class="btn"><a href="./login"> Sign Out </a></button>				
+		</div>
+	</div>
+
+	<div class="container-fluid h-100">
+		<div class="row justify-content-center">
+		<div>
+					<h3 style="text-align: center">Show PO Orders</h3>
+				</div>
+			<div class="col col-sm-6 col-md-6 col-lg-9 col-xl-10">
+				<table class="table table-striped">
+					<thead>
+						<td>PO ID</td>
+						<td>Order Id</td>					
+						<td>Status</td>					
+						<td>Created Date</td>
+						<td>Modified Date</td>
+					</thead>
+					<tbody>
+						<tr th:each="user: ${show_poorder}">
+						    <td th:text="${user.poid}"></td>
+							<td th:text="${user.orderid.orderid}"></td>							
+							<td th:text="${user.po_status}"></td>							
+							<td th:text="${user.createdAt}"></td>
+							<td th:text="${user.updatedAt}"></td>							
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
